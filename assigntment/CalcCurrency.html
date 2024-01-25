@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="calc.css" >
+    <title>Currency Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('samad/wall1.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Currency Converter</h1>
+    </header>
+        <p>
+          	<a href="file:///C:/xampp/htdocs/azroy/HomepageCur.html">HOME</a>
+			<a href="file:///C:/xampp/htdocs/azroy/theconversionpage.html">DESC</a>
+			<a href="file:///C:/xampp/htdocs/azroy/CalcCurrency.html">CALC</a>	
+        </p>
+
+    <section>
+        <p>Welcome to the Currency Converter Page! In here, you can convert money between MYR, USD, JPY, and THB.</p>
+
+        <h2>The Conversion Calculator</h2>
+        <p>Enter the amount, select the source currency, and select the target currency. Click "Convert" to see the result.</p>
+
+        <form onsubmit="calculateConversion(event)">
+            <label for="inputAmount">Enter Amount:</label>
+            <input type="number" id="inputAmount" required>
+
+            <label for="sourceCurrency">Select Currency:</label>
+            <select id="sourceCurrency" required>
+                <option value="MYR">MYR</option>
+                <option value="USD">USD</option>
+                <option value="JPY">JPY</option>
+                <option value="THB">THB</option>
+            </select>
+
+            <label for="targetCurrency">Select Currency:</label>
+            <select id="targetCurrency" required>
+                <option value="MYR">MYR</option>
+                <option value="USD">USD</option>
+                <option value="JPY">JPY</option>
+                <option value="THB">THB</option>
+            </select>
+
+            <button type="submit">Convert</button>
+        </form>
+
+        <div id="resultBox"></div>
+
+    </section>
+
+    <script>
+        function calculateConversion(event) {
+            event.preventDefault();
+
+            var inputAmount = parseFloat(document.getElementById('inputAmount').value);
+            var sourceCurrency = document.getElementById('sourceCurrency').value;
+            var targetCurrency = document.getElementById('targetCurrency').value;
+            var exchangeRate;
+
+            var exchangeRates = {
+                'MYR': { 'USD': 0.24, 'JPY': 26.09, 'THB': 7.83 },
+                'USD': { 'MYR': 4.15, 'JPY': 108.55, 'THB': 32.61 },
+                'JPY': { 'MYR': 0.038, 'USD': 0.0092, 'THB': 0.30 },
+                'THB': { 'MYR': 0.13, 'USD': 0.031, 'JPY': 3.32 },
+            };
+
+            if (exchangeRates[sourceCurrency] && exchangeRates[sourceCurrency][targetCurrency]) {
+                exchangeRate = exchangeRates[sourceCurrency][targetCurrency];
+            } else {
+                exchangeRate = 1;
+            }
+
+            var result = inputAmount * exchangeRate;
+
+            document.getElementById('resultBox').innerHTML = `<h3>Conversion Result:</h3>
+            <p>${inputAmount} ${sourceCurrency} is equal to ${result.toFixed(2)} ${targetCurrency}.`;
+        }
+    </script>
+</body>
+
+</html>
